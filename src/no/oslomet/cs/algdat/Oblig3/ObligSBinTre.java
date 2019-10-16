@@ -2,8 +2,6 @@ package no.oslomet.cs.algdat.Oblig3;
 
 ////////////////// ObligSBinTre /////////////////////////////////
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.*;
 
 
@@ -225,10 +223,56 @@ public class ObligSBinTre<T> implements Beholder<T>
     return liste.toString();
 
   }
+
+//  public static <T> Deque stackBTreeReverseInOrder(Node<T> node) {
+//    java.util.Deque<Node> omvendt = new java.util.ArrayDeque<Node>();
+//
+//    if (node == null) {
+//      return null;
+//
+//    } else {
+//      stackBTreeReverseInOrder(node.høyre);
+//      omvendt.add(node);
+//      stackBTreeReverseInOrder(node.venstre);
+//    }
+//    return omvendt;
+//  }
   
-  public String omvendtString()
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+  public String omvendtString() {
+
+    if (tom()){
+      return "[]"; // tomt tre
+    }
+
+    StringBuilder omvendt = new StringBuilder();
+    omvendt.append("[");
+
+    Stakk<Node<T>> stakk = new TabellStakk<>();
+    Node<T> p = rot;   // starter i roten og går til høyre
+
+    while (true)
+    {
+      while (p != null)
+      {
+        stakk.leggInn(p);
+        p = p.høyre;
+      }
+      if (stakk.tom())
+        break;
+      p = stakk.taUt();
+      if(omvendt.length() == 1){
+          omvendt.append(p.verdi);
+        }
+        else {
+          omvendt.append(", " + p.verdi);
+        }
+
+      p = p.venstre;
+    }
+
+    omvendt.append("]");
+
+    return omvendt.toString();
   }
   
   public String høyreGren()

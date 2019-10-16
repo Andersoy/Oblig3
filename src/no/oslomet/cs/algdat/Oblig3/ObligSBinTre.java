@@ -223,20 +223,6 @@ public class ObligSBinTre<T> implements Beholder<T>
     return liste.toString();
 
   }
-
-//  public static <T> Deque stackBTreeReverseInOrder(Node<T> node) {
-//    java.util.Deque<Node> omvendt = new java.util.ArrayDeque<Node>();
-//
-//    if (node == null) {
-//      return null;
-//
-//    } else {
-//      stackBTreeReverseInOrder(node.høyre);
-//      omvendt.add(node);
-//      stackBTreeReverseInOrder(node.venstre);
-//    }
-//    return omvendt;
-//  }
   
   public String omvendtString() {
 

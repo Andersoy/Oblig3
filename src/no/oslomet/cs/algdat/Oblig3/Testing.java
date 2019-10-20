@@ -95,5 +95,19 @@ public class Testing {
         System.out.println(tre.høyreGren());
                 // + "​ " + tre.lengstGren());
         // Utskrift: [I, T, J, R, S] [I, A, B, H, C, F, E, D]
-        }
+    }
+
+    // OPPGAVE 7 ////////////////////////////////////////////////
+    @org.junit.jupiter.api.Test
+    void oppgave7() {
+
+    }
+
+    // OPPGAVE 8 ////////////////////////////////////////////////
+    @org.junit.jupiter.api.Test
+    void oppgave8() {
+        
+    }
+
+
 }

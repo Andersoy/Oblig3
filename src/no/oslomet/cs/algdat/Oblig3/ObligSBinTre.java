@@ -17,6 +17,7 @@ Gruppemedlemmer:    S331398 - Anders Oeyrehagen
 
 public class ObligSBinTre<T> implements Beholder<T>
 {
+    StringBuilder bladNodeVerdier = new StringBuilder();
   private static final class Node<T>   // en indre nodeklasse
   {
     private T verdi;                   // nodens verdi
@@ -425,10 +426,40 @@ public class ObligSBinTre<T> implements Beholder<T>
     throw new UnsupportedOperationException("Ikke kodet ennå!");
   }
   
-  public String bladnodeverdier()
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+  public String bladnodeverdier() {
+      if(antall() == 0){
+          return "[]";
+      }
+
+      bladNodeVerdier = new StringBuilder();
+      StringBuilder ferdigeBladnoder = new StringBuilder();
+      ferdigeBladnoder.append("[" +finnBladNoderInOrder(rot)+"]");
+      return ferdigeBladnoder.toString();
   }
+
+
+  public String finnBladNoderInOrder(Node node) {
+
+      if (node == null) {
+            return "[]";
+      }
+
+      finnBladNoderInOrder(node.venstre);
+
+      if(node.venstre == null && node.høyre == null){
+          if(bladNodeVerdier.length() == 0){
+              bladNodeVerdier.append(node.verdi);
+          }
+          else {
+              bladNodeVerdier.append( ", " + node.verdi);
+          }
+      }
+      finnBladNoderInOrder(node.høyre);
+
+      return bladNodeVerdier.toString();
+  }
+
+
   
   public String postString()
   {

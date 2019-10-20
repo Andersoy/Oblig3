@@ -106,7 +106,7 @@ public class Testing {
     // OPPGAVE 8 ////////////////////////////////////////////////
     @org.junit.jupiter.api.Test
     void oppgave8() {
-        
+
     }
 
 

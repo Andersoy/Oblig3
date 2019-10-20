@@ -461,9 +461,48 @@ public class ObligSBinTre<T> implements Beholder<T>
 
 
   
-  public String postString()
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+  public String postString() {
+
+      Node<T> p = rot;
+
+      if(tom()){
+          return "[]";
+      }
+
+      StringBuilder postordenString = new StringBuilder();
+      postordenString.append("[");
+
+
+
+
+      //her er det brukt inorden-iterasjon med hjelpestack. Må gjøres om til postorden. Husk at man kan bruke foreldrepeker.
+      Stakk<Node<T>> postStakk = new TabellStakk();
+      while(true){
+          while (p != null)
+          {
+              postStakk.leggInn(p);
+              p = p.venstre;
+          }
+          if (postStakk.tom()) {
+              break;
+          }
+
+          p = postStakk.taUt();
+
+          if(postordenString.length() == 1){
+              postordenString.append(p.verdi);
+          }
+          else {
+              postordenString.append(", " + p.verdi);
+          }
+
+          p = p.høyre;
+      }
+      //Til hit
+
+      postordenString.append("]");
+      return postordenString.toString();
+
   }
   
   @Override

@@ -17,7 +17,8 @@ Gruppemedlemmer:    S331398 - Anders Oeyrehagen
 
 public class ObligSBinTre<T> implements Beholder<T>
 {
-    StringBuilder bladNodeVerdier = new StringBuilder();
+
+
   private static final class Node<T>   // en indre nodeklasse
   {
     private T verdi;                   // nodens verdi
@@ -425,6 +426,8 @@ public class ObligSBinTre<T> implements Beholder<T>
   {
     throw new UnsupportedOperationException("Ikke kodet ennå!");
   }
+
+    StringBuilder bladNodeVerdier = new StringBuilder();
   
   public String bladnodeverdier() {
       if(antall() == 0){
@@ -438,6 +441,8 @@ public class ObligSBinTre<T> implements Beholder<T>
   }
 
 
+
+
   public String finnBladNoderInOrder(Node node) {
 
       if (node == null) {
@@ -446,7 +451,9 @@ public class ObligSBinTre<T> implements Beholder<T>
 
       finnBladNoderInOrder(node.venstre);
 
+
       if(node.venstre == null && node.høyre == null){
+
           if(bladNodeVerdier.length() == 0){
               bladNodeVerdier.append(node.verdi);
           }
@@ -464,40 +471,77 @@ public class ObligSBinTre<T> implements Beholder<T>
   public String postString() {
 
       Node<T> p = rot;
-
       if(tom()){
           return "[]";
       }
 
       StringBuilder postordenString = new StringBuilder();
       postordenString.append("[");
+      int innlegging = 0;
 
 
+      while(innlegging<antall){
 
+          while (true) {
 
-      //her er det brukt inorden-iterasjon med hjelpestack. Må gjøres om til postorden. Husk at man kan bruke foreldrepeker.
-      Stakk<Node<T>> postStakk = new TabellStakk();
-      while(true){
-          while (p != null)
-          {
-              postStakk.leggInn(p);
-              p = p.venstre;
+              if (p.venstre != null){
+                  p = p.venstre;
+              }
+              else if (p.høyre != null){
+                  p = p.høyre;
+              }
+              else{
+                  break;
+              }
           }
-          if (postStakk.tom()) {
-              break;
-          }
 
-          p = postStakk.taUt();
-
-          if(postordenString.length() == 1){
+          if(postordenString.length() == 1) {
               postordenString.append(p.verdi);
+              innlegging++;
           }
-          else {
+          else{
               postordenString.append(", " + p.verdi);
+              innlegging++;
           }
 
-          p = p.høyre;
+          while(p.forelder != null) {
+              if (p.forelder.høyre != null && p.forelder.høyre != p) {
+                  p = p.forelder.høyre;
+                  break;
+              } else {
+                  p = p.forelder;
+                  postordenString.append(", " + p.verdi);
+                  innlegging++;
+              }
+          }
       }
+
+
+//      //her er det brukt inorden-iterasjon med hjelpestack. Må gjøres om til postorden. Husk at man kan bruke foreldrepeker.
+//      Stakk<Node<T>> postStakk = new TabellStakk();
+//
+//      while(true){
+//
+//          while (p != null) {
+//
+//              postStakk.leggInn(p);
+//              p = p.venstre;
+//          }
+//
+//          if (postStakk.tom()) {
+//              break;
+//          }
+//
+//          p = postStakk.taUt();
+//
+//          if(postordenString.length() == 1){
+//              postordenString.append(p.verdi);
+//          }
+//          else {
+//              postordenString.append(", " + p.verdi);
+//          }
+//          p = p.høyre;
+//      }
       //Til hit
 
       postordenString.append("]");

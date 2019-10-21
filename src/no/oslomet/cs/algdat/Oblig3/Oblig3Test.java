@@ -402,8 +402,8 @@ public class Oblig3Test {
 
 
     // OPPGAVE 6 ////////////////////////////////////////////////
-    @org.junit.jupiter.api.Test
-    void oppgave6() {
+        @org.junit.jupiter.api.Test
+        void oppgave6() {
         int antallFeil = 0;
 
         no.oslomet.cs.algdat.Oblig3.ObligSBinTre<Integer> tre =
@@ -495,7 +495,6 @@ public class Oblig3Test {
         tre2.leggInn("AAAAAAAAAAAAAAAAAAAA");
         String[] verdi = "HDGOCEKPJMIL".split("");
         for (String t : verdi) tre2.leggInn(t);
-
         s = tre2.lengstGren();
 
         if (!s.equals("[F, H, O, K, J, I]")) {

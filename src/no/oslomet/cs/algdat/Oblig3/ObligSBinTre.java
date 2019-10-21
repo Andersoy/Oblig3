@@ -174,8 +174,6 @@ public class ObligSBinTre<T> implements Beholder<T>
   
   private static <T> Node<T> nesteInorden(Node<T> p) {
 
-
-
     if (p.høyre != null)           // p har høyre subtre
     {
       p = p.høyre;
@@ -263,13 +261,111 @@ public class ObligSBinTre<T> implements Beholder<T>
   
   public String høyreGren()
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+    if(tom()){
+      return "[]";
+    }
+    if(antall == 1){
+      return "[" + rot.verdi + "]";
+    }
+
+
+    StringBuilder hoyreGren = new StringBuilder();
+    hoyreGren.append("[");
+
+    Node<T> p = rot.høyre;
+    Node<T> q = rot;
+    hoyreGren.append(rot.verdi);
+
+
+    while(true) {
+      while (p != null) {
+        hoyreGren.append(", " + p.verdi);
+        q = p;
+        p = p.høyre;
+      }
+      p = q;
+
+      if(p.venstre != null){
+
+        p = p.venstre;
+      }
+      else{
+        break;
+      }
+    }
+    hoyreGren.append("]");
+
+    return  hoyreGren.toString();
   }
+
+  //Metode som finner dybden rekursivt
+  public int maksGren(Node rot) {
+    if (rot == null) {
+      return 0;
+    }
+
+    int venstreDybde = maksGren(rot.venstre);
+    int hoyreDybde = maksGren(rot.høyre);
+
+    return Math.max(venstreDybde, hoyreDybde)+1;
+
+  }
+
+  static int maksNivaa = -1;
+   Node<T> dypestNode = null;
+
+   //Finner dypeste node;
+  public Node<T> finn(Node node, int nivaa) {
+    if (node != null ) {
+      finn(node.høyre, nivaa++);
+      if (nivaa > maksNivaa) {
+          dypestNode = node;
+          maksNivaa = nivaa;
+      }
+      finn(node.venstre, nivaa);
+    }
+    return dypestNode;
+  }
+
   
   public String lengstGren()
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+    maksNivaa=-1;
+    dypestNode = null;
+
+    if(tom()){
+      return "[]";
+    }
+    if(antall == 1){
+      return "[" + rot.verdi + "]";
+    }
+
+    StringBuilder lengstGren = new StringBuilder();
+    lengstGren.append("[");
+
+    Node<T> p = finn(rot, 0);
+
+    Stakk<Node<T>> lengsteGrenStakk = new TabellStakk();
+
+    while (p != null) {
+      lengsteGrenStakk.leggInn(p);
+      p=p.forelder;
+    }
+
+    Node<T> q;
+    q= lengsteGrenStakk.taUt();
+    lengstGren.append(q.verdi);
+
+    while (!lengsteGrenStakk.tom()) {
+      q= lengsteGrenStakk.taUt();
+      lengstGren.append(", " + q.verdi);
+    }
+
+    lengstGren.append("]");
+    return lengstGren.toString();
+
   }
+
   
   public String[] grener()
   {

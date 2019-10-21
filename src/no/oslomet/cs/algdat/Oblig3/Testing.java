@@ -84,4 +84,15 @@ public class Testing {
         // [1, 2, 6, 9, 10] [10, 9, 6, 2, 1]
         // OBS: Hvis du ikke har gjort oppgave 4 kan du her bruke toString()
     }
+
+    // OPPGAVE 6 ////////////////////////////////////////////////
+    @org.junit.jupiter.api.Test
+    void oppgave6() {
+        ObligSBinTre<Character> tre = new ObligSBinTre<>(Comparator.naturalOrder());
+        char[] verdier = "IATBHJCRSOFELKGDMPQN".toCharArray();
+        for (char c : verdier) tre.leggInn(c);
+        System.out.println(tre.høyreGren()+ " " + tre.lengstGren());
+
+        // Utskrift: [I, T, J, R, S] [I, A, B, H, C, F, E, D]
+    }
 }

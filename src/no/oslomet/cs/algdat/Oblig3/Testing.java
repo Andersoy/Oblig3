@@ -110,7 +110,7 @@ public class Testing {
         // Utskrift: ​
         // [I, A, B, ​H, C, F, E, D]
         // [I, A, B, ​H, C, F, G]
-        // [I, T, J, R, O,  L, K]
+        // [I, T, J, R, O, L, K]
         // [I, T, J,​ R, O, L, M, N]
         // [I, T, J, R, O, P, Q]
         // [I, T, J, R, S]

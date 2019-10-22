@@ -499,10 +499,92 @@ public class ObligSBinTre<T> implements Beholder<T>
 
   }
   
-  public String[] grener()
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+  public String[] grener() {
+
+        String[] tomt = {};
+        if(tom()){
+            return tomt;
+        }
+
+        antallBladNoder = 0;
+        antallBladNoder = antallBladNoder(rot);
+        antallInnlegginger = 0;
+        grenStringArray = new String[antallBladNoder];
+        index = 0;
+
+        String[] bladNodeStringArray = utskriftAlleBladnodegrener(rot);
+
+        return bladNodeStringArray;
   }
+
+    int antallBladNoder;
+    StringBuilder grenString = new StringBuilder();
+    Stakk<Node<T>> grenStakk = new TabellStakk<>();
+    String[] grenStringArray;
+    int antallInnlegginger;
+    int index;
+
+  public int antallBladNoder(Node p){
+
+      if(p != null) {
+
+          antallBladNoder(p.venstre);
+
+          if (p.venstre == null && p.høyre == null) {
+
+              antallBladNoder++;
+          }
+
+          antallBladNoder(p.høyre);
+      }
+
+        return antallBladNoder;
+  }
+
+
+  public String[] utskriftAlleBladnodegrener(Node p){
+
+      if(p == null) {
+            return null;
+      }
+          utskriftAlleBladnodegrener(p.venstre);
+
+          if (p.venstre == null && p.høyre == null) {
+              Node q = p;
+
+              while(p != null){
+                  grenStakk.leggInn(p);
+                  p = p.forelder;
+              }
+
+              while(!grenStakk.tom()){
+                  if(grenString.length() == 0){
+                      grenString.append("[" + grenStakk.taUt().verdi);
+                  }
+                  else {
+                      grenString.append(", " + grenStakk.taUt().verdi);
+                  }
+
+              }
+              grenString.append("]");
+              antallInnlegginger++;
+
+              for(int i = index; i < antallInnlegginger; i++) {
+                  grenStringArray[i] = grenString.toString();
+              }
+              index++;
+
+              grenString = new StringBuilder();
+              p = q;
+          }
+
+          utskriftAlleBladnodegrener(p.høyre);
+
+
+        return grenStringArray;
+  }
+
+
 
     StringBuilder bladNodeVerdier = new StringBuilder();
   
@@ -516,8 +598,6 @@ public class ObligSBinTre<T> implements Beholder<T>
       ferdigeBladnoder.append("[" +finnBladNoderInOrder(rot)+"]");
       return ferdigeBladnoder.toString();
   }
-
-
 
 
   public String finnBladNoderInOrder(Node node) {

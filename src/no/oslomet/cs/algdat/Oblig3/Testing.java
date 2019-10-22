@@ -120,8 +120,40 @@ public class Testing {
     // OPPGAVE 8 ////////////////////////////////////////////////
     @org.junit.jupiter.api.Test
     void oppgave8() {
+        ObligSBinTre<Character> tre = new ObligSBinTre<>(Comparator.naturalOrder());
+        char[] verdier = "IATBHJCRSOFELKGDMPQN".toCharArray();
+        for (char c : verdier) tre.leggInn(c);
+        System.out.println(tre.postString());
+        // [D, E, G, F, C, H, B, A, K, N, M, L, Q, P, O, S, R, J, T, I]
+
+
+        int[] a = {4,7,2,9,4,10,8,7,4,6};
+        ObligSBinTre<Integer> tre2 = new ObligSBinTre<>(Comparator.naturalOrder());
+        for (int verdi : a) {
+            tre2.leggInn(verdi);
+        }
+        System.out.println(tre2.postString()); // [2, 6, 4, 4, 7, 8, 10, 9, 7, 4]
 
     }
+
+    // OPPGAVE 9 ////////////////////////////////////////////////
+    @org.junit.jupiter.api.Test
+    void oppgave9() {
+
+
+
+    }
+
+    // OPPGAVE 10 ////////////////////////////////////////////////
+    @org.junit.jupiter.api.Test
+    void oppgave10() {
+        
+
+
+
+    }
+
+
 
 
 }

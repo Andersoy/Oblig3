@@ -416,10 +416,87 @@ public class ObligSBinTre<T> implements Beholder<T>
       hoyreGren.append("]");
       return  hoyreGren.toString();
   }
-  
-  public String lengstGren()
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+    private int maxNivaa;
+
+    public Node<T> finnDypesteNode(Node p) {
+
+        if (p != null) {
+
+            Node dypesteNodeHoyre  = finnDypesteNode(p.høyre);
+            if (dypesteNodeHoyre == null){
+                dypesteNodeHoyre = p;
+            }
+
+            Node dypesteNodeVenstre  = finnDypesteNode(p.venstre);
+            if(dypesteNodeVenstre == null){
+                dypesteNodeVenstre = p;
+            }
+
+            int hoyreDybde = 0;
+            Node q = dypesteNodeHoyre;
+            while(q != null){
+                q = q.forelder;
+                hoyreDybde++;
+            }
+
+            int venstreDybde = 0;
+            Node s = dypesteNodeVenstre;
+            while(s != null){
+                s = s.forelder;
+                venstreDybde++;
+            }
+
+            if(venstreDybde >= hoyreDybde){
+                return dypesteNodeVenstre;
+            }
+            else{
+                return  dypesteNodeHoyre;
+            }
+
+        }
+        return null;
+    }
+
+    public String lengstGren() {
+
+        if(tom()){
+            return "[]";
+        }
+
+        if(antall == 1){
+            return "[" + rot.verdi + "]";
+        }
+        maxNivaa = -1;
+
+        Node p = finnDypesteNode(rot);
+
+
+        Stakk<Node<T>> omvendtLengstStakk = new TabellStakk<>();
+        omvendtLengstStakk.leggInn(p);
+
+        while(p != rot){
+            p = p.forelder;
+            omvendtLengstStakk.leggInn(p);
+        }
+
+        StringBuilder lengsteGrenString = new StringBuilder();
+
+        p = omvendtLengstStakk.taUt();
+
+        lengsteGrenString.append("[" + p.verdi);
+
+
+        while(!omvendtLengstStakk.tom()){
+            p = omvendtLengstStakk.taUt();
+            lengsteGrenString.append(", " + p.verdi);
+
+        }
+
+        lengsteGrenString.append("]");
+
+        return lengsteGrenString.toString();
+
   }
   
   public String[] grener()

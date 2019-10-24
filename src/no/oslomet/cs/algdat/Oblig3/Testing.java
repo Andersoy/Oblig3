@@ -139,16 +139,29 @@ public class Testing {
     // OPPGAVE 9 ////////////////////////////////////////////////
     @org.junit.jupiter.api.Test
     void oppgave9() {
+        ObligSBinTre<Character> tre = new ObligSBinTre<>(Comparator.naturalOrder());
+        char[] verdier = "IATBHJCRSOFELKGDMPQN".toCharArray();
+        for (char c : verdier){
+            tre.leggInn(c);
+        }
 
+        for (Character c : tre){
+            System.out.print(c + " "); // D G K N Q S
+        }
 
+        System.out.println();
 
+        int[] a = {4,7,2,9,4,10,8,7,4,6};
+        ObligSBinTre<Integer> tre2 = new ObligSBinTre<>(Comparator.naturalOrder());
+        for (int verdi : a) {
+            tre2.leggInn(verdi);
+        }
+        for (Integer k : tre2) System.out.print(k + " "); // 2 6 7 10
     }
 
     // OPPGAVE 10 ////////////////////////////////////////////////
     @org.junit.jupiter.api.Test
     void oppgave10() {
-        
-
 
 
     }

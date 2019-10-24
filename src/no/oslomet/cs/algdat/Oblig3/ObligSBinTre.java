@@ -53,9 +53,10 @@ public class ObligSBinTre<T> implements Beholder<T>
 
   public ObligSBinTre(Comparator<? super T> c)    // konstruktør
   {
-    rot = null;
-    antall = 0;
-    comp = c;
+      endringer = 0;
+      rot = null;
+      antall = 0;
+      comp = c;
   }
   
   @Override
@@ -92,6 +93,8 @@ public class ObligSBinTre<T> implements Beholder<T>
       q.høyre = p;                        // høyre barn til q
     }
 
+
+    endringer++;
     antall++;                                // én verdi mer i treet
     return true;                             // vellykket innlegging
 
@@ -195,7 +198,7 @@ public class ObligSBinTre<T> implements Beholder<T>
               }
           }
       }
-
+      endringer++;
       antall--;   // det er nå én node mindre i treet
       return true;
   }
@@ -285,6 +288,7 @@ public class ObligSBinTre<T> implements Beholder<T>
             if(node == rot) {
                 rot = null;
             }
+            endringer++;
             antall--;
 
         }
@@ -714,13 +718,34 @@ public class ObligSBinTre<T> implements Beholder<T>
   
   private class BladnodeIterator implements Iterator<T>
   {
-    private Node<T> p = rot, q = null;
-    private boolean removeOK = false;
-    private int iteratorendringer = endringer;
-    
-    private BladnodeIterator()  // konstruktør
-    {
-      throw new UnsupportedOperationException("Ikke kodet ennå!");
+    private Node<T> p, q;
+    private boolean removeOK;
+    private int iteratorendringer;
+
+    private BladnodeIterator()  {  // konstruktør
+        iteratorendringer = endringer;
+        removeOK = false;
+        q = null;
+        p = rot;
+
+        if(!hasNext()){
+            return;
+        }
+
+        while(true){
+
+            if(p.venstre != null){
+
+              p = p.venstre;
+
+            }
+            else if(p.høyre != null){
+              p = p.høyre;
+            }
+            else{
+                break;
+            }
+        }
     }
     
     @Override
@@ -730,15 +755,72 @@ public class ObligSBinTre<T> implements Beholder<T>
     }
     
     @Override
-    public T next()
-    {
-      throw new UnsupportedOperationException("Ikke kodet ennå!");
+    public T next() {
+
+        if(iteratorendringer != endringer){
+            throw new ConcurrentModificationException("Ikke like endringer");
+        }
+
+        if(!hasNext()){
+            throw new NoSuchElementException("Ikke flere bladnoder");
+        }
+        removeOK = true;
+        Node<T> q = p;
+
+           while (p.forelder != null) {
+
+               if (p.forelder.høyre != null && p.forelder.høyre != p) {
+                   p = p.forelder.høyre;
+                   break;
+               }
+               p = p.forelder;
+           }
+
+           if( p != rot) {
+               while (true) {
+
+                   if (p.venstre != null) {
+                       p = p.venstre;
+                   } else if (p.høyre != null) {
+                       p = p.høyre;
+                   } else {
+                       break;
+                   }
+               }
+           }
+           else{
+               p = null;
+           }
+
+       return q.verdi;
     }
     
     @Override
     public void remove()
     {
-      throw new UnsupportedOperationException("Ikke kodet ennå!");
+        if (!removeOK){
+            throw new IllegalStateException("Ikke lov aa fjerne: ");
+        }
+
+        if(endringer != iteratorendringer){
+            throw new ConcurrentModificationException("Feil i antall endringer");
+        }
+        removeOK = false;
+
+        if(q.forelder != null) {
+
+            if (q.forelder.venstre == q) {
+                q.forelder.venstre = null;
+            }
+            else{
+                q.forelder.høyre = null;
+            }
+        }
+
+        antall--;
+        endringer++;
+        iteratorendringer++;
+
     }
 
   } // BladnodeIterator

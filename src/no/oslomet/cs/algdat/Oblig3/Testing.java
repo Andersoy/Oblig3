@@ -163,6 +163,41 @@ public class Testing {
     @org.junit.jupiter.api.Test
     void oppgave10() {
 
+        ObligSBinTre<Character> tre = new ObligSBinTre<>(Comparator.naturalOrder());
+        char[] verdier = "IATBHJCRSOFELKGDMPQN".toCharArray();
+        for (char c : verdier) tre.leggInn(c);
+
+        while (!tre.tom()) {
+            System.out.println(tre);
+            tre.fjernHvis(x -> true); }
+        /*
+        [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T]
+        [A, B, C, E, F, H, I, J, L, M, O, P, R, T]
+        [A, B, C, F, H, I, J, L, O, R, T]
+        [A, B, C, H, I, J, O, R, T]
+        [A, B, H, I, J, R, T]
+        [A, B, I, J, T]
+        [A, I, T]
+        [I]
+        */
+
+
+        int[] a = {4,7,2,9,4,10,8,7,4,6};
+        ObligSBinTre<Integer> tre2 = new ObligSBinTre<>(Comparator.naturalOrder());
+        for (int verdi : a) {
+            tre2.leggInn(verdi);
+        }
+        while (!tre2.tom()) {
+            System.out.println(tre2);
+            tre2.fjernHvis(x -> true); }
+
+        /*
+        [2, 4, 4, 4, 6, 7, 7, 8, 9, 10]
+        [4, 4, 4, 7, 8, 9]
+        [4, 4, 7, 9]
+        [4, 7]
+        [4]
+        */
 
     }
 

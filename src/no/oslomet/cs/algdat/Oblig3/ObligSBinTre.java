@@ -725,7 +725,7 @@ public class ObligSBinTre<T> implements Beholder<T>
     private BladnodeIterator()  {  // konstruktør
         iteratorendringer = endringer;
         removeOK = false;
-        q = null;
+//        q = null;
         p = rot;
 
         if(!hasNext()){
@@ -765,7 +765,7 @@ public class ObligSBinTre<T> implements Beholder<T>
             throw new NoSuchElementException("Ikke flere bladnoder");
         }
         removeOK = true;
-        Node<T> q = p;
+        q = p;
 
            while (p.forelder != null) {
 
@@ -816,6 +816,7 @@ public class ObligSBinTre<T> implements Beholder<T>
                 q.forelder.høyre = null;
             }
         }
+        q = null;
 
         antall--;
         endringer++;

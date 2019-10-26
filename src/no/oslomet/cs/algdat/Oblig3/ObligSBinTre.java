@@ -421,7 +421,7 @@ public class ObligSBinTre<T> implements Beholder<T>
       return  hoyreGren.toString();
   }
 
-    private int maxNivaa;
+
 
     public Node<T> finnDypesteNode(Node p) {
 
@@ -471,7 +471,7 @@ public class ObligSBinTre<T> implements Beholder<T>
         if(antall == 1){
             return "[" + rot.verdi + "]";
         }
-        maxNivaa = -1;
+
 
         Node p = finnDypesteNode(rot);
 
